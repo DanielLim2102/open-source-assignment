@@ -2,6 +2,14 @@
 'use strict';
 
 var persist = {};
+var localPass;
+var inputPwd = document.getElementById("pwd");
+var inputVerify = document.getElementById("verifyPwd");
+// var btnSave = document.getElementById("btnSave");
+
+chrome.storage.local.get("password", function(i){
+  localPass = i.password;
+})
 
 document.addEventListener('change', ({target}) => {
   const id = target.id;
@@ -43,6 +51,18 @@ document.addEventListener('DOMContentLoaded', () => chrome.storage.local.get({pe
         e.value = prefs.persist[key];
       }
     }
+  }
+  if(localPass){
+    // alert(localPass);
+    document.getElementById("check_password").checked = true;
+    // btnSave.classList.add("disabled");
+    inputVerify.value = null;
+    inputPwd.value = null;
+    // inputVerify.classList.remove("disappear");
+  }
+  else{
+    document.getElementById("check_password").checked = false;
+    // alert("no pass");
   }
   search();
 }));

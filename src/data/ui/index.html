@@ -25,8 +25,41 @@
           <input type="number" value="1" id="deep-level" min="0" max="3">
         </label>
       </fieldset>
+        
+        <fieldset flex=1 class="row" style="margin-top: 0px;">
+        <legend><label><input type="checkbox" id="group-size"> <span data-i18n="ui_file_size"></span></label></legend>
+        <table>
+          <tr>
+            <td data-i18n="ui_min"></td>
+            <td><input type="number" value="4000" id="size-min"></td>
+            <td data-i18n="ui_bytes"></td>
+          </tr>
+          <tr>
+            <td data-i18n="ui_max"></td>
+            <td><input type="number" value="0" id="size-max"></td>
+            <td data-i18n="ui_bytes"></td>
+          </tr>
+        </table>
+
+        
+          
+          <table style="margin-left: -65px;">
+              <tr> <legend data-i18n="ui_unkown" style="margin-top: -12px;margin-left: 10px;"></legend></tr>
+             
+            <tr>
+              <td><input type="radio" name="size" id="unknown-size-skip"></td>
+              <td><label for="unknown-size-skip" data-i18n="ui_skip"></label></td>
+            </tr>
+            <tr>
+              <td><input type="radio" name="size" id="unknown-size-save" checked="true"></td>
+              <td><label for="unknown-size-save" data-i18n="ui_save"></label></td>
+            </tr>
+          </table>
+        
+      </fieldset>
     </header>
     <div hbox>
+<!--
       <fieldset flex=1>
         <legend><label><input type="checkbox" id="group-size"> <span data-i18n="ui_file_size"></span></label></legend>
         <table>
@@ -56,8 +89,9 @@
           </table>
         </fieldset>
       </fieldset>
+-->
 
-      <fieldset flex=1>
+      <fieldset flex=1 style="margin-top: 0px;">
         <legend><label><input type="checkbox" id="group-dimension"></label><span data-i18n="ui_dimension"></span></legend>
         <table>
           <tr>
@@ -68,6 +102,8 @@
             <td data-i18n="ui_max_width"></td>
             <td><input type="number" value="0" id="dimension-width-max"></td>
           </tr>
+            </table>
+          <table style="margin-left: 150px;margin-top: -51px;">
           <tr>
             <td data-i18n="ui_min_height"></td>
             <td><input type="number" value="200" id="dimension-height-min"></td>
@@ -78,9 +114,9 @@
           </tr>
         </table>
 
-        <fieldset>
-          <legend data-i18n="ui_unkown"></legend>
-          <table>
+        
+          <legend data-i18n="ui_unkown" style="margin-left: 332px;margin-top: -59px;"></legend>
+          <table style="margin-left: 330px;">
             <tr>
               <td><input type="radio" name="dimension" id="unknown-dimension-skip"></td>
               <td><label for="unknown-dimension-skip" data-i18n="ui_skip"></label></td>
@@ -90,12 +126,18 @@
               <td><label for="unknown-dimension-save" data-i18n="ui_save"></label></td>
             </tr>
           </table>
-        </fieldset>
+        
       </fieldset>
 
-      <fieldset flex=1>
+      <fieldset flex=1 style="margin-top: 0px;">
         <legend><label><input type="checkbox" id="group-type" checked="true"><span data-i18n="ui_image_types"></span></label></legend>
-        <table>
+            <table style="margin-left: 140px;">
+          <tr>
+            <td><input type="checkbox" id="no-type" checked="true"></td>
+            <td><label for="no-type" data-i18n="ui_no_extension"></label></td>
+          </tr>
+        </table>
+        <table style="margin-top: -23px;">
           <tr>
             <td><input type="radio" name="type" id="type-all" checked=true></td>
             <td><label for="type-all" data-i18n="ui_all_images"></label></td>
@@ -105,6 +147,7 @@
             <td><label for="type-selection" data-i18n="ui_Selection"></label></td>
           </tr>
         </table>
+        
         <table class="indent" id="image-types">
           <tr>
             <td><input type="checkbox" id="type-jpeg"></td>
@@ -114,6 +157,7 @@
             <td><input type="checkbox" id="type-png"></td>
             <td><label for="type-png" data-i18n="ui_png_images"></label></td>
           </tr>
+        <table class="indent" id="image-types" style="margin-left: 131px;margin-top: -48px;">
           <tr>
             <td><input type="checkbox" id="type-gif"></td>
             <td><label for="type-gif" data-i18n="ui_gif_images"></label></td>
@@ -122,21 +166,19 @@
             <td><input type="checkbox" id="type-bmp"></td>
             <td><label for="type-bmp" data-i18n="ui_bmp_images"></label></td>
           </tr>
+        </table>
+        <table class="indent" id="image-types" style="margin-left: 52%;margin-top: -47px;margin-bottom: 3%;">
           <tr>
             <td><input type="checkbox" id="type-webp"></td>
             <td><label for="type-webp" data-i18n="ui_webp_images"></label></td>
           </tr>
         </table>
-        <table>
-          <tr>
-            <td><input type="checkbox" id="no-type" checked="true"></td>
-            <td><label for="no-type" data-i18n="ui_no_extension"></label></td>
-          </tr>
         </table>
+        
       </fieldset>
     </div>
 
-    <div hbox>
+    <div hbox style="margin-top: 0px;">
       <fieldset flex=1>
         <legend data-i18n="ui_regexp"></legend>
         <table width="100%">
@@ -164,10 +206,10 @@
         </table>
       </fieldset>
     </div>
-    <div hbox>
+    <div hbox style="margin-top: -2px;">
       <fieldset flex=1>
         <legend data-i18n="ui_misc"></legend>
-        <table width="100%">
+        <table width="100%" style="margin-top: -6px;">
           <tr>
             <td><input type="checkbox" id="group-origin"></td>
             <td><label for="group-origin" data-i18n="ui_same_domain"></label></td>
@@ -202,9 +244,9 @@
       </fieldset>
     </div>
 
-    <fieldset>
+    <fieldset style="margin-top: -2px;">
       <legend data-i18n="ui_save_in"></legend>
-      <table width=100%>
+      <table width=100% style="margin-top: -6px;">
         <colgroup>
           <col width=24>
           <col width="100">
@@ -242,7 +284,19 @@
               </div>
             </td>
           </tr>
-          <tr>
+          <!-- <tr>
+            <td></td>
+            <td data-i18n="ui_zip_pass"></td>
+            <td>
+              <div hbox>
+                <input type="text" id="pass" placeholder="Password" flex="1">
+                <button id="btn" data-cmd="checkpass"> Check </button>
+                <button id="btn" data-cmd="setpass"> set </button>
+
+              </div>
+            </td>
+          </tr>
+          <tr> -->
             <td></td>
             <td data-i18n="ui_directory"></td>
             <td>
@@ -254,9 +308,9 @@
         </tbody>
       </table>
     </fieldset>
-    <fieldset style="margin-bottom: 55px">
+    <fieldset style="margin-bottom: -4px">
       <legend data-i18n="ui_preferences"></legend>
-      <table width=100%>
+      <table  style="margin-bottom: 0%;" width=100%>
         <colgroup>
           <col>
           <col width="100">
@@ -274,19 +328,29 @@
             <td data-i18n="ui_delay"></td>
             <td align="right"><input type="number" id="timeout" min="5" max="120" value=10></td>
           </tr>
+
+          <tr data-i18n="ui_password" data-i18n-value="title">
+            <td><input type="checkbox" id="check_password">
+              <label>Password</label>
+              <!-- <button id="checkPWd">Check</button> -->
+              <input type="text"  id="pwd" class=disappear placeholder="Enter password">
+              <input type="text"  id="verifyPwd" class=disappear placeholder="Verify password">
+              <input type="text"  id="savePwd" class=disappear placeholder="Enter password before save">
+            </td>
+          </tr>
         </tbody>
       </table>
     </fieldset>
 
     <footer hbox>
-      <button data-i18n="ui_help_title" data-i18n-value="title" data-cmd="help"><span data-i18n="ui_help"></span></button>
+      <!-- <button data-i18n="ui_help_title" data-i18n-value="title" data-cmd="option"><span data-i18n="ui_option"></span></button> -->
       <button data-i18n="ui_reset_title" data-i18n-value="title" data-cmd="reset"><span data-i18n="ui_reset"></span></button>
       <button data-i18n="ui_restart_title" data-i18n-value="title" data-cmd="restart"><span data-i18n="ui_restart"></span></button>
       <button data-i18n="ui_stop_title" data-i18n-value="title" data-cmd="stop"><span data-i18n="ui_stop"></span></button>
       <button data-i18n="ui_gallery_title" data-i18n-value="title" data-cmd="gallery"><span data-i18n="ui_gallery"></span></button>
       <span flex="1"></span>
       <button data-i18n="ui_copy_title" data-i18n-value="title" data-cmd="copy"><span data-i18n="ui_copy"></span></button>
-      <button data-i18n="ui_save_title" data-i18n-value="title" data-cmd="save"><span data-i18n="ui_save"></span></button>
+      <button data-i18n="ui_save_title" id="btnSave" data-i18n-value="title" data-cmd="save"><span data-i18n="ui_save"></span></button>
       <button data-i18n="ui_cancel_title" data-i18n-value="title" data-cmd="close"><span data-i18n="ui_cancel"></span></button>
     </footer>
     <script src="persist.js"></script>

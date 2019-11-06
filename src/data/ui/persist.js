@@ -7,7 +7,7 @@ var inputPwd = document.getElementById("pwd");
 var inputVerify = document.getElementById("verifyPwd");
 // var btnSave = document.getElementById("btnSave");
 
-chrome.storage.local.get("password", function(i){
+chrome.storage.local.get("password", function(i){ // Get local storage saved value
   localPass = i.password;
 })
 
@@ -52,17 +52,16 @@ document.addEventListener('DOMContentLoaded', () => chrome.storage.local.get({pe
       }
     }
   }
-  if(localPass){
-    // alert(localPass);
-    document.getElementById("check_password").checked = true;
+  // check for password returned from local storage
+  // if password is true
+  if(localPass){  
+    document.getElementById("check_password").checked = true; // checkbox is checked as default
     // btnSave.classList.add("disabled");
     inputVerify.value = null;
     inputPwd.value = null;
-    // inputVerify.classList.remove("disappear");
   }
   else{
     document.getElementById("check_password").checked = false;
-    // alert("no pass");
   }
   search();
 }));

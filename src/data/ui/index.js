@@ -523,16 +523,16 @@ document.addEventListener('click', ({target}) => {
     chrome.storage.local.get("password", function (i){
       if(i.password){ // got password
         alert("please verify password");
-        btn.checked = true;
-        input2.classList.remove("disappear");
-        input3.classList.add("disappear");
+        btn.checked = true; // when button is checked
+        input2.classList.remove("disappear"); // hide input2
+        input3.classList.add("disappear"); // show input3
       }
       else{           // no password
-        if (btn.checked){
-          input.classList.remove("disappear");
+        if (btn.checked){ // if button checked
+          input.classList.remove("disappear"); // hide input
         }
-        else{
-          input.classList.add("disappear");
+        else{ // if button unchecked
+          input.classList.add("disappear"); //  show input
         }
       }
     })
@@ -556,21 +556,21 @@ document.addEventListener('click', ({target}) => {
 
 // update counter
 document.addEventListener("keypress",function(event){
-  var t = event.target;
-  var keycode = event.keyCode || event.which;
-  var cbPwd = document.getElementById("check_password");
-  var btnSave = document.getElementById("btnSave");
-  if (t.id == "pwd") {
+  var t = event.target; // get event element
+  var keycode = event.keyCode || event.which; //get keyboard pressed value
+  var cbPwd = document.getElementById("check_password"); // get id check_password
+  var btnSave = document.getElementById("btnSave"); // get id btnSave
+  if (t.id == "pwd") { // if id is pwd
     var inputPwd = document.getElementById("pwd");
     var inputVerify = document.getElementById("verifyPwd");
-    if(keycode === 13){
-      if(inputPwd.value){
-        chrome.storage.local.set({
+    if(keycode === 13){ // when press enter
+      if(inputPwd.value){ // if value is true
+        chrome.storage.local.set({ // set value into local storage
           password : inputPwd.value
         });
         // inputVerify.classList.remove("disappear");
         inputPwd.classList.add("disappear");
-        cbPwd.checked = true;
+        cbPwd.checked = true; // check checkbox for cbPwd
         inputPwd.value = "";
         inputVerify.value = "";
         // btnSave.classList.add("disabled");
@@ -583,11 +583,11 @@ document.addEventListener("keypress",function(event){
   else if(t.id == "verifyPwd"){
     var inputPwd = document.getElementById("pwd");
     var inputVerify = document.getElementById("verifyPwd");
-    chrome.storage.local.get("password", function(i){
-      if(keycode === 13){
-        if(i.password == inputVerify.value){
+    chrome.storage.local.get("password", function(i){ // Get value from local storage 
+      if(keycode === 13){ // when press enter
+        if(i.password == inputVerify.value){ // if password = input value
           inputVerify.classList.add("disappear");
-          chrome.storage.local.remove("password");
+          chrome.storage.local.remove("password"); // remove password in local storage
           // inputPwd.classList.remove("disappear");
           inputPwd.value = "";
           inputVerify.value = "";
@@ -600,14 +600,14 @@ document.addEventListener("keypress",function(event){
       }
     })
   }
-  else if(t.id == "savePwd"){
+  else if(t.id == "savePwd"){ // get password before saving input id
     var enterPwd = document.getElementById("savePwd");
     chrome.storage.local.get("password", function(i){
       if(keycode === 13){
-        if(i.password == enterPwd.value){
+        if(i.password == enterPwd.value){ // if password match with local storage value
           enterPwd.classList.add("disappear");
-          t.disabled = true;
-          const obj = Object.assign(build(), {
+          t.disabled = true; 
+          const obj = Object.assign(build(), { // save images
             cmd: 'save-images'
           });
           // length after filtering
@@ -629,7 +629,7 @@ document.addEventListener("keypress",function(event){
             save();
           }
         }
-        else{
+        else{ // if password not same, execute alert
           alert("wrong password");
           enterPwd.value = "";
         }

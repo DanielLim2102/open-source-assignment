@@ -88,6 +88,7 @@ let title;
 const images = {};
 let total = 0;
 const indices = {};
+var browser = browser || chrome;
 
 /* guess filename */
 function guess(img) {
@@ -423,29 +424,46 @@ elements.deep.level.addEventListener('change', search);
 // commands
 document.addEventListener('click', ({target}) => {
   const cmd = target.dataset.cmd;
+  const pass = target.target;
   if (cmd === 'save') {
-    target.disabled = true;
-    const obj = Object.assign(build(), {
-      cmd: 'save-images'
-    });
-    // length after filtering
-    const len = elements.counter.save.value;
-    const save = () => {
-      elements.counter.progress.value = 0;
-      elements.counter.progress.max = len;
-      chrome.runtime.sendMessage(obj);
-    };
-    if (len > Number(elements.prefs.max.value)) {
-      if (window.confirm(`Are you sure you want to download "${len}" images?`)) {
-        save();
+    var cbPass = document.getElementById("check_password");
+    var verifyPass = document.getElementById("verifyPwd");
+    var entPass = document.getElementById("savePwd");
+    var savetext=document.getElementById("savePwdText");
+    // var keycode = target.keyCode || target.which;
+    chrome.storage.local.get("password", function(i){
+      if(cbPass.checked && i.password){
+        alert("Enter Password");
+        entPass.value = "";
+        verifyPass.classList.add("disappear");
+        entPass.classList.remove("disappear");
+        savetext.classList.remove("disappear");
       }
-      else {
-        target.disabled = false;
+      else{
+        target.disabled = true;
+        const obj = Object.assign(build(), {
+          cmd: 'save-images'
+        });
+        // length after filtering
+        const len = elements.counter.save.value;
+        const save = () => {
+          elements.counter.progress.value = 0;
+          elements.counter.progress.max = len;
+          chrome.runtime.sendMessage(obj);
+        };
+        if (len > Number(elements.prefs.max.value)) {
+          if (window.confirm(`Are you sure you want to download "${len}" images?`)) {
+            save();
+          }
+          else {
+            target.disabled = false;
+          }
+        }
+        else {
+          save();
+        }
       }
-    }
-    else {
-      save();
-    }
+    })
   }
   else if (cmd === 'copy') {
     const cb = document.getElementById('clipboard');
@@ -495,14 +513,141 @@ document.addEventListener('click', ({target}) => {
       bubbles: true
     }));
   }
-  else if (cmd === 'help') {
-    chrome.tabs.create({
-      url: chrome.runtime.getManifest().homepage_url
-    });
+  else if (cmd === 'option') {
+    browser.runtime.openOptionsPage(null);
+    alert("123");
   }
+  if(target.id=="check_password"){
+    var btn = document.getElementById("check_password");
+    var input = document.getElementById("pwd");
+    var input2 = document.getElementById("verifyPwd");
+    var input3 = document.getElementById("savePwd");
+    var savetext = document.getElementById("savePwdText");
+    chrome.storage.local.get("password", function (i){
+      if(i.password){ // got password
+        alert("please verify password");
+        btn.checked = true;
+        input2.classList.remove("disappear");
+        savetext.classList.remove("disappear");
+        input3.classList.add("disappear");
+      }
+      else{           // no password
+        if (btn.checked){
+          input.classList.remove("disappear");
+          savetext.classList.remove("disappear");
+        }
+        else{
+          input.classList.add("disappear");
+          savetext.classList.add("disappear");
+        }
+      }
+    })
+  }
+  // else if(target.id == "checkPWd"){
+  //   chrome.storage.local.get("password", function(i){
+  //     alert(i.password);
+  //   })
+  // }
+  // else if (cmd=== 'checkpass'){
+  //   var a = localStorage.getItem("zippass");
+  //   alert(a);
+  // }
+  // else if (cmd=== 'setpass'){
+  //   var a = document.getElementById("pass").value;
+  //   // alert(a);
+  //   localStorage.setItem("zippass", a);
+  // }
 });
+// check password before save
+
 // update counter
-document.addEventListener('change', update);
+document.addEventListener("keypress",function(event){
+  var t = event.target;
+  var keycode = event.keyCode || event.which;
+  var cbPwd = document.getElementById("check_password");
+  var savetext = document.getElementById("savePwdText");
+  var btnSave = document.getElementById("btnSave");
+  if (t.id == "pwd") {
+    var inputPwd = document.getElementById("pwd");
+    var inputVerify = document.getElementById("verifyPwd");
+    if(keycode === 13){
+      if(inputPwd.value){
+        chrome.storage.local.set({
+          password : inputPwd.value
+        });
+        // inputVerify.classList.remove("disappear");
+        inputPwd.classList.add("disappear");
+        savetext.classList.add("disappear");
+        cbPwd.checked = true;
+        inputPwd.value = "";
+        inputVerify.value = "";
+        // btnSave.classList.add("disabled");
+      }
+      else{
+        alert("Empty pass");
+      }
+    }
+  }
+  else if(t.id == "verifyPwd"){
+    var inputPwd = document.getElementById("pwd");
+    var inputVerify = document.getElementById("verifyPwd");
+    chrome.storage.local.get("password", function(i){
+      if(keycode === 13){
+        if(i.password == inputVerify.value){
+          inputVerify.classList.add("disappear");
+          savetext.classList.add("disappear");
+          chrome.storage.local.remove("password");
+          // inputPwd.classList.remove("disappear");
+          inputPwd.value = "";
+          inputVerify.value = "";
+          cbPwd.checked = false;
+          // btnSave.classList.remove("disabled");
+        }
+        else{
+          alert("wrong password");
+        }
+      }
+    })
+  }
+  else if(t.id == "savePwd"){
+    var enterPwd = document.getElementById("savePwd");
+    chrome.storage.local.get("password", function(i){
+      if(keycode === 13){
+        if(i.password == enterPwd.value){
+          enterPwd.classList.add("disappear");
+          savetext.classList.add("disappear");
+          t.disabled = true;
+          const obj = Object.assign(build(), {
+            cmd: 'save-images'
+          });
+          // length after filtering
+          const len = elements.counter.save.value;
+          const save = () => {
+            elements.counter.progress.value = 0;
+            elements.counter.progress.max = len;
+            chrome.runtime.sendMessage(obj);
+          };
+          if (len > Number(elements.prefs.max.value)) {
+            if (window.confirm(`Are you sure you want to download "${len}" images?`)) {
+              save();
+            }
+            else {
+              t.disabled = false;
+            }
+          }
+          else {
+            save();
+          }
+        }
+        else{
+          alert("wrong password");
+          enterPwd.value = "";
+        }
+      }
+    })
+  }
+})
+document.addEventListener('change', update)
 { // wait for .5 seconds before updating
   let id;
   const input = () => {
